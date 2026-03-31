@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#012a15"/>
+  <title>TaxPilot NG — Nigeria 2026 Tax Reform</title>
+  <meta name="description" content="Nigeria's easiest tax filing app. Built for the 2026 Tax Reform Act. Coming soon."/>
+  <meta property="og:title" content="TaxPilot NG — Nigeria 2026 Tax Reform"/>
+  <meta property="og:description" content="File your taxes in 5 minutes. Step by step. Plain English. Free to start."/>
+  <meta property="og:url" content="https://taxpilot.app"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #012a15;
+      --surface: #01361c;
+      --card:    #014d27;
+      --border:  #026d37;
+      --accent:  #00d084;
+      --accent2: #00a866;
+      --gold:    #f5a623;
+      --diamond: #a78bfa;
+      --text:    #e6fff4;
+      --muted:   #4d9e74;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BACKGROUND ── */
+    .bg-orbs {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.15;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb1 { width: 400px; height: 400px; background: var(--accent); top: -100px; left: -100px; animation-delay: 0s; }
+    .orb2 { width: 300px; height: 300px; background: var(--diamond); bottom: -50px; right: -50px; animation-delay: 3s; }
+    .orb3 { width: 200px; height: 200px; background: var(--gold); top: 50%; left: 50%; animation-delay: 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      position: relative; z-index: 1;
+      max-width: 480px; margin: 0 auto;
+      padding: 0 20px;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 20px;
+      background: rgba(1, 42, 21, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 208, 132, 0.1);
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px; font-weight: 800; color: var(--text);
+    }
+    .logo-text span { color: var(--accent); }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(0, 208, 132, 0.1);
+      border: 1px solid rgba(0, 208, 132, 0.3);
+      border-radius: 20px; padding: 8px 20px;
+      font-size: 14px; font-weight: 800; color: var(--accent);
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── HERO ── */
+    .hero { text-align: center; padding-top: 80px; }
+
+    .hero-flag {
+      font-size: 48px; margin-bottom: 16px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 8vw, 42px);
+      font-weight: 900; line-height: 1.15;
+      color: var(--text); margin-bottom: 8px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+    .hero-title .accent { color: var(--accent); }
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 16px; color: var(--muted);
+      line-height: 1.7; margin-bottom: 32px;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+
+
+    /* ── EMAIL FORM ── */
+    .form-wrap {
+      width: 100%; margin-bottom: 32px;
+      animation: fadeUp 0.6s ease 0.5s both;
+    }
+    .form-label {
+      font-size: 13px; font-weight: 600;
+      color: var(--muted); margin-bottom: 10px;
+      display: block; text-align: center;
+    }
+    .form-row {
+      display: flex; gap: 8px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 6px 6px 6px 14px;
+      transition: border-color 0.2s;
+    }
+    .form-row:focus-within { border-color: var(--accent); }
+    .form-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      padding: 8px 0;
+    }
+    .form-input::placeholder { color: var(--muted); }
+    .form-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 10px;
+      padding: 10px 18px; cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 800;
+      color: #002a15; white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .form-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,208,132,0.4); }
+    .form-btn:active { transform: translateY(0); }
+    .form-success {
+      text-align: center; padding: 14px;
+      background: rgba(0,208,132,0.1);
+      border: 1px solid rgba(0,208,132,0.3);
+      border-radius: 12px;
+      color: var(--accent); font-weight: 700; font-size: 14px;
+      display: none;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      width: 100%; display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px; margin-bottom: 32px;
+      animation: fadeUp 0.6s ease 0.6s both;
+    }
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px;
+    }
+    .feature-icon { font-size: 22px; margin-bottom: 8px; }
+    .feature-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px; font-weight: 800; color: var(--text);
+      margin-bottom: 4px;
+    }
+    .feature-desc { font-size: 10px; color: var(--muted); line-height: 1.5; }
+
+    /* ── LANGUAGES ── */
+    .langs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 28px;
+      animation: fadeUp 0.6s ease 0.7s both;
+    }
+    .lang-pill {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 700; color: var(--muted);
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: flex; gap: 0;
+      width: 100%; margin-bottom: 32px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      animation: fadeUp 0.6s ease 0.8s both;
+    }
+    .stat {
+      flex: 1; padding: 16px 12px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px; font-weight: 900; color: var(--accent);
+    }
+    .stat-label { font-size: 9px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 3px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center; padding: 24px 0 40px;
+      font-size: 11px; color: var(--muted);
+      animation: fadeUp 0.6s ease 0.9s both;
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 380px) {
+      .hero-title { font-size: 28px; }
+
+      .count-box { min-width: 56px; padding: 10px 12px; }
+      .count-num { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">TaxPilot <span>NG</span></div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="container">
+  <div class="hero">
+
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Launching Soon
+    </div>
+
+    <div class="hero-flag">🇳🇬</div>
+
+    <h1 class="hero-title">
+      Tax Filing,<br/>
+      <span class="accent">Made Simple.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Nigeria's easiest tax filing app.<br/>
+      Built for the <strong style="color:var(--gold)">2026 Tax Reform Act</strong>.<br/>
+      Free to start. No accountant needed.
+    </p>
+
+
+
+    <!-- Email capture -->
+    <div class="form-wrap">
+      <label class="form-label">Get notified when we launch — could be sooner! 👇</label>
+      <div class="form-row" id="formRow">
+        <input class="form-input" type="email" id="emailInput" placeholder="your@email.com or WhatsApp number"/>
+        <button class="form-btn" onclick="submitEmail()">Notify Me ⚡</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        🎉 You're on the list! We'll notify you the moment TaxPilot NG goes live.
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <div class="feature-title">Guided Filing</div>
+        <div class="feature-desc">Step by step. Plain English. Done in 5 minutes.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">Secure Vault</div>
+        <div class="feature-desc">Store receipts, payslips & bank statements safely.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">AI Assistant</div>
+        <div class="feature-desc">Ask any tax question. Get instant answers.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💼</div>
+        <div class="feature-title">Payroll & VAT</div>
+        <div class="feature-desc">Generate payslips & track VAT returns easily.</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">40M+</div>
+        <div class="stat-label">Target SMEs</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">₦0</div>
+        <div class="stat-label">Free to Start</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5 Min</div>
+        <div class="stat-label">To File</div>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div class="langs">
+      <span class="lang-pill">🇬🇧 English</span>
+      <span class="lang-pill">🇳🇬 Pidgin</span>
+      <span class="lang-pill">🇳🇬 Yorùbá</span>
+      <span class="lang-pill">🇳🇬 Igbo</span>
+      <span class="lang-pill">🇳🇬 Hausa</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      A product of <strong style="color:var(--text)">CPC Direct Ventures Ltd</strong><br/>
+      <a href="/cdn-cgi/l/email-protection#157d7079797a5561746d657c797a613b746565"><span class="__cf_email__" data-cfemail="721a171e1e1d3206130a021b1e1d065c130202">[email&#160;protected]</span></a> · 
+      <a href="/cdn-cgi/l/email-protection#6f0e0b190a1d1b061c0a2f1b0e171f0603001b410e1f1f"><span class="__cf_email__" data-cfemail="29484d5f4c5b5d405a4c695d4851594045465d07485959">[email&#160;protected]</span></a><br/><br/>
+      © 2026 CPC Direct Ltd · All rights reserved
+    </div>
+
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+
+  // Email capture
+  function submitEmail(){
+    const val = document.getElementById('emailInput').value.trim();
+    if(!val){ document.getElementById('emailInput').focus(); return; }
+    do
